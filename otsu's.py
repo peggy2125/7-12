@@ -50,9 +50,8 @@ def process_image(image_path, background_path):
     bg_sub = cv2.subtract(blurred_bg, blurred)
     cv2.imshow('bg_sub', bg_sub)
 
-    # Apply threshold
-    _, binary = cv2.threshold(bg_sub, 10, 255, cv2.THRESH_BINARY)
-    #binary = cv2.adaptiveThreshold(bg_sub, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 3, 2)
+    # Apply Otsu's threshold
+    _, binary = cv2.threshold(bg_sub, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     cv2.imshow('binary', binary)
 
     # Erode and dilate to remove noise
@@ -94,12 +93,11 @@ def process_image(image_path, background_path):
 
 # Replace 'path_to_image.tif' with your image file path
 #process_image('Test_images/Slight under focus/0066.tiff', 'Test_images/Slight under focus/background.tiff')
-
 # Set the directory containing your files
 directory = 'Test_images/Slight under focus'
-# # Get a list of all tiff files
+ # Get a list of all tiff files
 files = [f for f in os.listdir(directory) if f.endswith('.tiff')]
 for image in files:
     image_path = os.path.join(directory, image)
-#    print(image_path)
+    print(image_path)
     process_image(image_path, 'Test_images/Slight under focus/background.tiff')

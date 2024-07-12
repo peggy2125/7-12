@@ -34,6 +34,8 @@ def trace_contours(edge_image):
 def process_image(image_path, background_path):
     # Load the image in grayscale
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    mean_brightness = np.mean(image)
+    print(f"The average brightness of the input image is: {mean_brightness}")
     background = cv2.imread(background_path, cv2.IMREAD_GRAYSCALE)
     blurred_bg = cv2.GaussianBlur(background, (5, 5), 0)
     cv2.imshow('raw', image)
@@ -52,7 +54,7 @@ def process_image(image_path, background_path):
 
     # Apply threshold
     _, binary = cv2.threshold(bg_sub, 10, 255, cv2.THRESH_BINARY)
-    #binary = cv2.adaptiveThreshold(bg_sub, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 3, 2)
+    # binary = cv2.adaptiveThreshold(bg_sub, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 3, 2)
     cv2.imshow('binary', binary)
 
     # Erode and dilate to remove noise
@@ -93,13 +95,13 @@ def process_image(image_path, background_path):
 
 
 # Replace 'path_to_image.tif' with your image file path
-#process_image('Test_images/Slight under focus/0066.tiff', 'Test_images/Slight under focus/background.tiff')
+process_image('Test_images/Slight under focus/0066_bright.tif', 'Test_images/Slight under focus/background.tiff')
 
 # Set the directory containing your files
-directory = 'Test_images/Slight under focus'
+# directory = 'Test_images/Slight under focus'
 # # Get a list of all tiff files
-files = [f for f in os.listdir(directory) if f.endswith('.tiff')]
-for image in files:
-    image_path = os.path.join(directory, image)
-#    print(image_path)
-    process_image(image_path, 'Test_images/Slight under focus/background.tiff')
+# files = [f for f in os.listdir(directory) if f.endswith('.tiff')]
+# for image in files:
+#     image_path = os.path.join(directory, image)
+#     print(image_path)
+#     process_image(image_path, 'Test_images/Slight under focus/background.tiff')
